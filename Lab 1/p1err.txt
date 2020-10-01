@@ -2,6 +2,6 @@ start
 
 a <- "sum;
 
-a! <- 23;
+b# <- 23;
 
-atop
+stop

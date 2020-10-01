@@ -9,7 +9,7 @@ scanning a;
 while (a != 0){
 	scanning b;
 	
-	check if ( b != 0 ) then {
+	check if (b != 0 ) then {
 		sum <- sum + b;
 		a <- a - 1;
 	}
