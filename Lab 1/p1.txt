@@ -3,9 +3,15 @@ start
 @a is Number, @b is Number;
 @c is Number;
 
-a <- 23;
+scanning a;
 b <- 34;
-c <- a addition b;
+
+check if ( a %% 2 == 0) then{
+	c <- a addition b;	
+}
+else then{
+	c <- a substract b;
+}
 
 printing c;
 

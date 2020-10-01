@@ -1,0 +1,21 @@
+start
+
+@a is Number, @b is Text, @c is Text;
+
+scanning a;
+
+c <- "";
+
+while (a != 0){
+
+	scanning b;
+	
+	c <- c concat b;
+	
+	a <- a - 1;
+	
+}
+
+printing c;
+
+stop
