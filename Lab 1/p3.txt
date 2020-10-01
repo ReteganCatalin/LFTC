@@ -10,8 +10,8 @@ while (a != 0){
 	scanning b;
 	
 	check if (b != 0) then {
-		sum <- sum + b;
-		a <- a - 1;
+		sum <- sum addition b;
+		a <- a substract 1;
 	}
 }
 
