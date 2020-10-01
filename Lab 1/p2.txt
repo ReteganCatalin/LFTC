@@ -1,0 +1,13 @@
+start
+
+@a is Text, @b is Text, @c is Text;
+
+b <- "nota";
+
+a <- "abc" concat b;
+
+c <- a concat b;
+
+printing c;
+
+stop

@@ -1,0 +1,12 @@
+start
+
+@a is Number, @b is Number;
+@c is Number;
+
+a <- 23;
+b <- 34;
+c <- a addition b;
+
+printing c;
+
+stop

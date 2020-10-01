@@ -1,0 +1,20 @@
+start
+
+@a is Number;
+@b is Number;
+@sum is Number;
+sum <- 0;
+scanning a;
+
+while (a != 0){
+	scanning b;
+	
+	check if ( b != 0 ) then {
+		sum <- sum + b;
+		a <- a - 1;
+	}
+}
+
+printing sum;
+
+stop
