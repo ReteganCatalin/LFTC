@@ -17,5 +17,7 @@ iostmt = "scanning" identifier | "printing" { expression | constant  }
 structstmt = ifstmt | whilestmt
 ifstmt = "check if (" condition ") then" cmpdstmt "else then " cmpdstmt
 whilestmt = "while(" condition ")" cmpdstmt
-condition = expression relation expression
+condition = expression relation expression 
+conditional= (conditional | condition | Boolean) booleanrel (conditional | condition | Boolean)
+booleanrel = "&" | "|"
 relation = "<" | "<=" | "==" | "<>" | ">=" | ">"
