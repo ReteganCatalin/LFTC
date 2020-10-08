@@ -1,0 +1,34 @@
+Alphabet:
+a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+b. Decimal digits (0-9);
+C. + / -
+
+LEXIC
+Lexic:
+     a.Special symbols, representing:
+     - operators add sub mul div mod  <- < <= == >= > != &  | concat 
+     - separators () { }  ; space ,
+     - reserved words:
+            is @ Number scanning printing Text start stop Character  Boolean
+        	check if then else 
+        	while 
+     b.identifiers
+       	-a sequence of letters and digits, such that the first character is a letter; the rule is:
+          identifier = letter | letter {letter | digit}
+          letter = {capital_letter | small_letter}
+          capital_letter = "A" | "B" | . ..| "Z"
+          small_letter = “a” | “b“ | … | “z”
+          digit = "0" | non_zero_digit
+          non_zero_digit= “1” | “2” | … | “9”
+
+     c.constants
+     	1.Number - rule:
+        	 Number = “0” | [“+”|”-”] non_zero_digit{digit}
+     	2.Character
+        	 Character=” ‘ ” letter “ ‘ ” | “ ‘ “ digit  ” ' “
+     	3.Text
+        	 Text=” ” ” { letter | digit  } “ “ “
+     	4. Boolean
+        	 Boolean= “true” | “false”
+
+constant = Number  | Character | Text | Boolean

@@ -6,11 +6,11 @@ start
 scanning a;
 b <- 34;
 
-check if ( a %% 2 == 0) then{
-	c <- a addition b;	
+check if ( a mod 2 == 0) then{
+	c <- a add b;	
 }
 else then{
-	c <- a substract b;
+	c <- a sub b;
 }
 
 printing c;

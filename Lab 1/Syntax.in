@@ -1,0 +1,21 @@
+Syntax: 
+program = "start" cmpdstmt "stop"
+declstmt = declaration  | declaration "," declstmt  
+declaration = “@” identifier "is" type
+type1 = "Number" | "Character" | "Text" | "Boolean"
+arraydecl = "Vector" "[" Number "]" "is" type1
+type = type1|arraydecl
+cmpdstmt = "{" stmtlist "}"
+stmtlist = stmt “;”| stmt ";" stmtlist
+stmt = simplstmt | structstmt 
+simplstmt = assignstmt | iostmt | declstmt
+assignstmt = identifier "<-" expression
+expression = expression “add" term |  expression “sub” term | term
+term = term "mul" factor | term “div” factor | term “mod” factor | factor
+factor =  expression  | identifier | Number
+iostmt = "scanning" identifier | "printing" { expression | constant  }
+structstmt = ifstmt | whilestmt
+ifstmt = "check if (" condition ") then" cmpdstmt "else then " cmpdstmt
+whilestmt = "while(" condition ")" cmpdstmt
+condition = expression relation expression
+relation = "<" | "<=" | "==" | "<>" | ">=" | ">"
