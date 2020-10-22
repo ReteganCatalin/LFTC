@@ -105,10 +105,10 @@ public class Scanner {
     }
 
     public Boolean isIdentifier(String token) {
-        return token.matches("^[a-zA-Z]([a-zA-Z]|[0-9]){0,256}");
+        return token.matches("^[a-zA-Z][a-zA-Z0-9]{0,256}");
     }
 
     public Boolean isConstant(String token){
-        return token.matches("^[0|[+-][1-9][0-9]?|\"[a-zA-Z0-9]*\"|true|false|'[0-9a-zA-Z]']$");
+        return token.matches("^[0|([+-])[1-9][0-9]*|\"[a-zA-Z0-9]*\"|true|false|'[0-9a-zA-Z]']$");
     }
 }
