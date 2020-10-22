@@ -1,3 +1,5 @@
+package domain;
+
 public class Pair<K,V>{
     K key;
 

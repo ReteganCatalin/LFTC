@@ -1,3 +1,6 @@
+package domain;
+
+
 import java.util.ArrayList;
 
 public class SymbolTable {
@@ -41,9 +44,9 @@ public class SymbolTable {
     }
 
     //Gets as a parameter the whole String token(identifier or constant)
-    //As the output parameter we will have a Pair which will be either null if we didn't find the token or
-    //having the key the index in the table of Nodes and as the value of the Pair the position in which we found the token in that Node list
-    public Pair<Integer, Integer> search(String token) {
+    //As the output parameter we will have a domain.Pair which will be either null if we didn't find the token or
+    //having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we found the token in that Node list
+    public Pair<Integer,Integer> search(String token) {
         // Find head of chain for given key
         int listIndex = getListIndex(token);
         HashNode<String> head = hashList.get(listIndex);
@@ -61,8 +64,8 @@ public class SymbolTable {
 
 
     //Gets as a parameter the whole String token(identifier or constant)
-    //As the output parameter we will have a Pair
-    //having the key the index in the table of Nodes and as the value of the Pair the position in which we found the token in that Node list or the position in which we added the token
+    //As the output parameter we will have a domain.Pair
+    //having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we found the token in that Node list or the position in which we added the token
     public Pair<Integer, Integer> pos(String token) {
         Pair<Integer, Integer> index = search(token);
         if (index == null) {
@@ -73,8 +76,8 @@ public class SymbolTable {
     }
 
     // Gets as a parameter the whole String token(identifier or constant)
-    // As the output parameter we will have a Pair:
-    // having the key the index in the table of Nodes and as the value of the Pair the position in which we insert in that Node list
+    // As the output parameter we will have a domain.Pair:
+    // having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we insert in that Node list
     public Pair<Integer, Integer> add(String token) {
         // Find head of chain for given key
         int listIndex = getListIndex(token);
