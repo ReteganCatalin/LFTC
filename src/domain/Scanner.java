@@ -105,7 +105,7 @@ public class Scanner {
     }
 
     public Boolean isIdentifier(String token) {
-        return token.matches("^[a-zA-Z][a-zA-Z0-9]{0,256}");
+        return token.matches("^[a-zA-Z][a-zA-Z0-9]{0,255}");
     }
 
     public Boolean isConstant(String token){
