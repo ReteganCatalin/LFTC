@@ -9,7 +9,7 @@ public class SymbolTable {
     private ArrayList<HashNode<String>> hashList;
 
 
-    // number of nodes in the hashList
+    //number of nodes in the hashList
     private int startingNodes;
 
     class HashNode<K> {
@@ -71,9 +71,10 @@ public class SymbolTable {
     }
 
 
-    // Gets as a parameter the whole String token(identifier or constant)
-    // As the output parameter we will have a domain.Pair
-    // having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we found the token in that Node list or the position in which we added the token
+    //Gets as a parameter the whole String token(identifier or constant)
+    //As the output parameter we will have a domain.Pair
+    //having the key the index in the table of Nodes and as the value of the domain.
+    //Pair the position in which we found the token in that Node list or the position in which we added the token
     public Pair<Integer, Integer> pos(String token) {
         Pair<Integer, Integer> index = search(token);
         if (index == null) {
