@@ -17,6 +17,7 @@ public class Main {
         String line;
         int count=0;
         try {
+
             FileReader fileReader =
                     new FileReader(fileName);
             BufferedReader bufferedReader =
