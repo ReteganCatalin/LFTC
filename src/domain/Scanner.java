@@ -46,7 +46,7 @@ public class Scanner {
     }
 
     private Pair<String,Integer> getOperatorToken(String line,Integer currentIndex){
-         String token=" ";
+         String token="";
          Integer start=currentIndex;
          while(currentIndex < line.length() && isPartOfOperator(line.charAt(currentIndex))){
              token+=line.charAt(currentIndex);
@@ -56,49 +56,58 @@ public class Scanner {
              return new Pair(token,currentIndex);
          }
          else{
-             return new Pair(token,start);
+             return new Pair("",start);
          }
     }
 
     public ArrayList<String> tokenize(String line){
 
         String token="";
-        Integer index=0;
+        Integer index=-1;
         ArrayList<String> tokenList=new ArrayList<>();
         while(index<line.length()){
-
-            if(isPartOfOperator(line.charAt(index))){
+            if(token.equals(" ")) {
+                token="";
+            }
+            else if(index!=-1 && isPartOfOperator(line.charAt(index))){
                 Pair<String,Integer> operator;
                 operator=this.getOperatorToken(line,index);
                 if (!operator.key.isEmpty()) {
-                    index=operator.value;
+                    if(!token.isEmpty() && token.length()!=1){
+                        token=token.substring(0,token.length()-1);
+                        tokenList.add(token);
+                    }
+                    index=operator.value-1;
                     tokenList.add(operator.key);
+                    token="";
                 }
-                token="";
-
             }
-
-            else if(line.charAt(index) == '\n'){
-                if(!token.isEmpty()){
+            else if(index!=-1 && line.charAt(index) == '\n'){
+                if(!token.isEmpty() && token.length()!=1){
+                    token=token.substring(0,token.length()-1);
                     tokenList.add(token);
                 }
-                index++;
                 token="";
             }
-
-            else if(isSeparator(line.charAt(index))){
-                if(!token.isEmpty()){
+            else if(index!=-1 && isSeparator(line.charAt(index))){
+                if(!token.isEmpty() && token.length()!=1) {
+                    token=token.substring(0,token.length()-1);
                     tokenList.add(token);
                 }
-                index++;
-                tokenList.add(Character.toString(line.charAt(index)));
+                if(line.charAt(index)!=' ') {
+                    tokenList.add(Character.toString(line.charAt(index)));
+                }
                 token="";
             }
-            token+=line.charAt(index);
             index++;
+            if(index<line.length()){
+                token=token+line.charAt(index);
+            }
         }
-        if(token.isEmpty()){
-            tokenList.add(token);
+        if(!token.isEmpty()){
+            if(!token.equals(" ")) {
+                tokenList.add(token);
+            }
         }
         return tokenList;
 
@@ -109,6 +118,6 @@ public class Scanner {
     }
 
     public Boolean isConstant(String token){
-        return token.matches("^[0|([+-])[1-9][0-9]*|\"[a-zA-Z0-9]*\"|true|false|'[0-9a-zA-Z]']$");
+        return token.matches("^[0]|[+-]?[1-9][0-9]*|\"([a-zA-Z0-9])*\"|true|false|'[0-9a-zA-Z]']$");
     }
 }

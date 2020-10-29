@@ -1,0 +1,10 @@
+Symbol table: (StartNode 0 :null
+StartNode 1 :HashNode{key=23, next=null}
+StartNode 2 :null
+StartNode 3 :null
+StartNode 4 :null
+StartNode 5 :null
+StartNode 6 :null
+StartNode 7 :HashNode{key=a, next=null}
+StartNode 8 :null
+StartNode 9 :null
