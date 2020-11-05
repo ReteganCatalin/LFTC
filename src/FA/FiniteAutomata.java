@@ -4,6 +4,7 @@ import domain.Pair;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 public class FiniteAutomata {
@@ -44,9 +45,38 @@ public class FiniteAutomata {
         return Arrays.stream(line.strip().split(" ")).skip(2L).collect(Collectors.toList());
     }
 
-    private boolean keyExists(Pair<String,String> k){
-        Set<Pair<String,String>> allStateTransitions=D.keySet();
-        return allStateTransitions.stream().anyMatch(transition->transition.newEquality(k.getKey(),k.getValue()));
+    public List<Pair<String, String>> getAllTransition(String nextState, String how) {
+        Set<Pair<String, String>> allStateTransitions = D.keySet();
+        return allStateTransitions.stream().filter(transition -> transition.getKey().equals(nextState) && D.get(transition).contains(how)).collect(Collectors.toList());
+    }
+
+    public boolean acceptsSequence(String check) {
+        if (isDFA()) {
+            List<Pair<String, String>> nextMoves;
+            boolean found = false;
+            nextMoves = getAllTransition(q0, check.substring(0, 1));
+            Queue<Pair<String, String>> queue = new LinkedList<>(nextMoves);
+            int position = 1;
+            while (!queue.isEmpty() && position == check.length()) {
+                Pair<String, String> transition = queue.remove();
+                nextMoves = getAllTransition(transition.getValue(), check.substring(position, position + 1));
+                queue.addAll(nextMoves);
+                if(!queue.isEmpty()) {
+                    position += 1;
+                }
+                if (position == check.length() && F.contains(transition.getValue())) {
+                    found = true;
+                }
+            }
+            return found;
+        }
+        return false;
+
+    }
+
+    private boolean keyExists(Pair<String, String> k) {
+        Set<Pair<String, String>> allStateTransitions = D.keySet();
+        return allStateTransitions.stream().anyMatch(transition -> transition.newEquality(k.getKey(), k.getValue()));
 
     }
 
@@ -61,26 +91,25 @@ public class FiniteAutomata {
         E = lineSplitter(line);
         line = bufferedReader.readLine();
         q0 = lineSplitter(line).get(0);
-        if(!Q.contains(q0)){
+        if (!Q.contains(q0)) {
             throw new Exception("Initial state not a state!");
         }
         line = bufferedReader.readLine();
         F = lineSplitter(line);
-        for(String finalState:F){
-            if(!Q.contains(finalState)){
+        for (String finalState : F) {
+            if (!Q.contains(finalState)) {
                 throw new Exception("Final state not a state!");
             }
         }
         bufferedReader.readLine();
         line = bufferedReader.readLine();
-        while (line!=null) {
+        while (line != null) {
             List<String> tokens = Arrays.stream(line.strip().replace("=", "").replace(",", "").split(" ")).collect(Collectors.toList());
             Pair<String, String> transition = new Pair(tokens.get(0), tokens.get(1));
-            if(keyExists(transition)){
+            if (keyExists(transition)) {
                 D.get(transition).add(tokens.get(3));
-            }
-            else{
-                D.put(transition,new ArrayList<>());
+            } else {
+                D.put(transition, new ArrayList<>());
                 D.get(transition).add(tokens.get(3));
 
             }
@@ -88,8 +117,8 @@ public class FiniteAutomata {
         }
     }
 
-    public boolean isDFA(){
-        Set<Pair<String,String>> allStateTransitions=D.keySet();
-        return allStateTransitions.stream().noneMatch(transition->D.get(transition).size()>1);
+    public boolean isDFA() {
+        Set<Pair<String, String>> allStateTransitions = D.keySet();
+        return allStateTransitions.stream().noneMatch(transition -> D.get(transition).size() > 1);
     }
 }

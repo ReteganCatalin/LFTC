@@ -40,6 +40,10 @@ public class Main {
         System.out.println(finiteAutomata.isDFA());
     }
 
+    private  static void checkSequence(){
+        System.out.println(finiteAutomata.acceptsSequence("000010"));
+    }
+
     private static void displayOptions() {
         System.out.println("1 Display Finite Automata States");
         System.out.println("2 Display Finite Automata Alphabet");
@@ -47,7 +51,8 @@ public class Main {
         System.out.println("4 Display Finite Automata Final State");
         System.out.println("5 Display Finite Automata Transitions");
         System.out.println("6 Display if DFA");
-        System.out.println("7 Exit");
+        System.out.println("7 Check if sequence");
+        System.out.println("8 Exit");
     }
     public static void main(String args[]){
         Main.readFiniteAutomata();
@@ -74,12 +79,15 @@ public class Main {
                 case 6:
                     checkDFA();
                     break;
+                case 7:
+                    checkSequence();
+                    break;
                 default:
                     System.out.println("Wrong input");
                     displayOptions();
 
             }
-            if(i==7)
+            if(i==8)
                 break;
         }
     }
