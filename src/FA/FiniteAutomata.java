@@ -57,14 +57,15 @@ public class FiniteAutomata {
             nextMoves = getAllTransition(q0, check.substring(0, 1));
             Queue<Pair<String, String>> queue = new LinkedList<>(nextMoves);
             int position = 1;
-            while (!queue.isEmpty() && position == check.length()) {
+            if(!queue.isEmpty() && position==check.length()){
+                return true;
+            }
+            while (!queue.isEmpty() && position != check.length()) {
                 Pair<String, String> transition = queue.remove();
                 nextMoves = getAllTransition(transition.getValue(), check.substring(position, position + 1));
+                position += 1;
                 queue.addAll(nextMoves);
-                if(!queue.isEmpty()) {
-                    position += 1;
-                }
-                if (position == check.length() && F.contains(transition.getValue())) {
+                if (position == check.length() && !nextMoves.isEmpty() && F.contains(nextMoves.get(0).getValue())) {
                     found = true;
                 }
             }
@@ -119,6 +120,18 @@ public class FiniteAutomata {
 
     public boolean isDFA() {
         Set<Pair<String, String>> allStateTransitions = D.keySet();
-        return allStateTransitions.stream().noneMatch(transition -> D.get(transition).size() > 1);
+        for (Pair<String, String> transition : allStateTransitions) {
+            List<String> possibilities = D.get(transition);
+            for (String pair : Q) {
+                if (!pair.equals(transition.getValue())) {
+                    List<String> values = D.get(new Pair(transition.getKey(), pair));
+                    if (values != null)
+                        if(values.stream().anyMatch(value -> possibilities.stream().anyMatch(pos -> pos.equals(value)))) {
+                             return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
