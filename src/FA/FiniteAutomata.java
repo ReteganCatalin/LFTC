@@ -57,7 +57,7 @@ public class FiniteAutomata {
             nextMoves = getAllTransition(q0, check.substring(0, 1));
             Queue<Pair<String, String>> queue = new LinkedList<>(nextMoves);
             int position = 1;
-            if(!queue.isEmpty() && position==check.length()){
+            if(!queue.isEmpty() && position==check.length() && F.contains(queue.peek().getValue())){
                 return true;
             }
             while (!queue.isEmpty() && position != check.length()) {
@@ -82,39 +82,52 @@ public class FiniteAutomata {
     }
 
     public void read(String fileName) throws Exception {
-        FileReader fileReader =
-                new FileReader(fileName);
-        BufferedReader bufferedReader =
-                new BufferedReader(fileReader);
-        String line = bufferedReader.readLine();
-        Q = lineSplitter(line);
-        line = bufferedReader.readLine();
-        E = lineSplitter(line);
-        line = bufferedReader.readLine();
-        q0 = lineSplitter(line).get(0);
-        if (!Q.contains(q0)) {
-            throw new Exception("Initial state not a state!");
-        }
-        line = bufferedReader.readLine();
-        F = lineSplitter(line);
-        for (String finalState : F) {
-            if (!Q.contains(finalState)) {
-                throw new Exception("Final state not a state!");
-            }
-        }
-        bufferedReader.readLine();
-        line = bufferedReader.readLine();
-        while (line != null) {
-            List<String> tokens = Arrays.stream(line.strip().replace("=", "").replace(",", "").split(" ")).collect(Collectors.toList());
-            Pair<String, String> transition = new Pair(tokens.get(0), tokens.get(1));
-            if (keyExists(transition)) {
-                D.get(transition).add(tokens.get(3));
-            } else {
-                D.put(transition, new ArrayList<>());
-                D.get(transition).add(tokens.get(3));
+        try (FileReader fileReader = new FileReader(fileName)) {
 
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            Q = lineSplitter(line);
+            line = bufferedReader.readLine();
+            E = lineSplitter(line);
+            line = bufferedReader.readLine();
+            q0 = lineSplitter(line).get(0);
+            if (!Q.contains(q0)) {
+                throw new Exception("Initial state not a state!");
             }
             line = bufferedReader.readLine();
+            F = lineSplitter(line);
+            for (String finalState : F) {
+                if (!Q.contains(finalState)) {
+                    throw new Exception("Final state not a state!");
+                }
+            }
+            bufferedReader.readLine();
+            line = bufferedReader.readLine();
+            while (line != null) {
+                List<String> tokens = Arrays.stream(line.strip()
+                        .replace("=", "")
+                        .replace(",", "")
+                        .split(" "))
+                        .collect(Collectors.toList());
+                if (Q.contains(tokens.get(0)) && Q.contains(tokens.get(0))) {
+                    Pair<String, String> transition = new Pair(tokens.get(0), tokens.get(1));
+                    if (E.contains(tokens.get(3))) {
+                        if (keyExists(transition)) {
+                            D.get(transition).add(tokens.get(3));
+                        } else {
+                            D.put(transition, new ArrayList<>());
+                            D.get(transition).add(tokens.get(3));
+
+                        }
+                        line = bufferedReader.readLine();
+                    } else {
+                        throw new Exception("Transition value not found in alphabet");
+                    }
+                } else {
+                    throw new Exception("States not found in states");
+                }
+            }
         }
     }
 

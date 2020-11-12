@@ -124,7 +124,7 @@ public class Main {
         System.out.println("12 Check if boolean");
         System.out.println("13 Exit");
     }
-    public static void main(String args[]){
+    public static void main(String[] args){
         Main.readFiniteAutomata();
         Main.readIdentifierFA();
         Main.readIntegerFA();
