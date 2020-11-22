@@ -1,4 +1,4 @@
-N = S A B
+N = S
 E = a b c
 P =
 S->bS
