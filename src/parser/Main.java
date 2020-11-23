@@ -54,6 +54,9 @@ public class Main {
                     displayGoTo(value);
 
                 }
+                case 6-> {
+                    System.out.println(parser.ColCan_LR());
+                }
             }
             if (i == 0) {
                 break;
