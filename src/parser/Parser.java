@@ -83,10 +83,12 @@ public class Parser {
 
         C.add(ClosureLR("S'->.S"));
 
-        boolean dirty = false;
+        boolean dirty;
 
         do{
-            for (List<Pair<String, String >> state: C) {
+            dirty=false;
+            List<List<Pair<String, String>>> filteredC = new ArrayList<>(C);
+            for (List<Pair<String, String >> state:filteredC ) {
                 for (String element: Stream.concat(getN().stream(), getE().stream())
                         .collect(Collectors.toList())) {
 
