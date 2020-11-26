@@ -25,6 +25,8 @@ public class Main {
         System.out.println("3 Display Productions");
         System.out.println("4 Choose production to do closure");
         System.out.println("5 Choose symbol to do goto on state(ClosureLR of S'->S)");
+        System.out.println("6 Canonical Collection");
+
     }
 
     public static void main(String[] args) {
@@ -56,6 +58,9 @@ public class Main {
                 }
                 case 6-> {
                     System.out.println(parser.ColCan_LR());
+                }
+                case 7->{
+                    System.out.println(parser.createLRTable(parser.ColCan_LR()));
                 }
             }
             if (i == 0) {
