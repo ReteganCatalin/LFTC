@@ -2,6 +2,7 @@ package parser;
 
 import domain.Pair;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +26,9 @@ public class Main {
         System.out.println("3 Display Productions");
         System.out.println("4 Choose production to do closure");
         System.out.println("5 Choose symbol to do goto on state(ClosureLR of S'->S)");
-        System.out.println("6 Canonical Collection");
+        System.out.println("6 Display Canonical Collection");
+        System.out.println("7 Display LR table");
+        System.out.println("8 Parse word");
 
     }
 
@@ -62,6 +65,11 @@ public class Main {
                 case 7->{
                     System.out.println(parser.createLRTable(parser.ColCan_LR()));
                 }
+                case 8 ->{
+                    System.out.println("Give input:");
+                    String value=scan.next();
+                    parseWord(value);
+                }
             }
             if (i == 0) {
                 break;
@@ -92,4 +100,15 @@ public class Main {
             System.out.println(gotoResult);
         }
     }
+    private static void parseWord(String word){
+        List<List<Pair<String,String>>>  canCol=parser.ColCan_LR();
+        HashMap<Integer, Pair<String, HashMap<String, Integer>>> lrTable=parser.createLRTable(canCol);
+        List<String> wordResult=parser.parsingAlg(lrTable,canCol,word);
+        if(wordResult==null)
+            System.out.println("Error");
+        else{
+            System.out.println(wordResult);
+        }
+    }
+
 }

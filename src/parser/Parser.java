@@ -155,32 +155,36 @@ public class Parser {
 
         //TODO work with stack
         List<Pair<String, String>> state = C.get(0);
-        List<List<Pair<String, String>>> alpha = new ArrayList<>();
+        List<String> alpha = new ArrayList<>();
         ;
         List<Character> beta = new ArrayList<>();
         List<String> phi = new ArrayList<>();
-        alpha.add(state);
-        for (int i = 0; i <= word.length(); i++) {
+        alpha.add("0");
+        for (int i = 0; i <= word.length()-1; i++) {
             beta.add(word.charAt(i));
         }
-        beta.add('$');
         while(true){
-            int position=C.indexOf(state);
+            int position=Integer.parseInt(alpha.get(alpha.size()-1));
             if (lrTable.get(position).getKey().equals("shift")) {
-                Character a = beta.remove(beta.size()-1);
+                Character a = beta.remove(0);
                 state = gotoLR(state, a.toString());
-                alpha.add(a,state);
+                alpha.add(a.toString());
+                alpha.add(Integer.toString(C.indexOf(state)));
             } else if (lrTable.get(position).getKey().contains("reduce")) {
-                String findReducer=lrTable.get(position).getKey().substring(7,lrTable.get(position).getKey().length()-1);
+                String findReducer=lrTable.get(position).getKey().substring(7);
                 int reducer=Integer.parseInt(findReducer);
                 Pair<String,String> production=search_prod(reducer);
-                alpha.remove(production.getValue()); //?
-                state = gotoLR(alpha.get(0), production.getKey());
-                alpha.add(production.getKey().charAt(0),state); // ?
+                for(int i=0;i<2*production.getValue().length();i++) {
+                    alpha.remove(alpha.size()-1); //?
+                }
+                state = gotoLR(C.get(Integer.parseInt(alpha.get(alpha.size()-1))), production.getKey());
+                alpha.add(Character.toString(production.getKey().charAt(0)));
+                alpha.add(Integer.toString(C.indexOf(state)));
                 phi.add(findReducer);
             }
             else{
                 if(lrTable.get(position).getKey().equals("acc")){
+                    Collections.reverse(phi);
                     return phi;
                 }
                 else{
