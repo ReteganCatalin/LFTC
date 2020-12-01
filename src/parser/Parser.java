@@ -142,6 +142,8 @@ public class Parser {
 
     }
 
+
+
     private Integer hasReduce(List<Pair<String, String>> state) {
         for(Pair<String,String> lrItem: state){
             if(lrItem.getValue().charAt(lrItem.getValue().length()-1)=='.'){
@@ -199,5 +201,23 @@ public class Parser {
         return grammar.getP().get(reducer);
     }
 
-
+    public void createTable(List<String> productions){
+        List<Pair<String,Pair<Integer,Integer>>> table=new ArrayList<>();
+        table.add(new Pair<>("S",new Pair<>(-1,-1)));
+        int k=0;
+        for(String production:productions){
+            while(!grammar.getN().contains(table.get(k).getKey())){
+                k++;
+            }
+            Pair<String, String> prod=search_prod(Integer.parseInt(production));
+            int index=0;
+            table.add(new Pair(String.valueOf(prod.getValue().charAt(0)),new Pair(k,-1)));
+            index++;
+            for(;index<prod.getValue().length();index++){
+                table.add(new Pair(String.valueOf(prod.getValue().charAt(index)),new Pair(k,k+index)));
+            }
+            k++;
+        }
+        System.out.println(table);
+    }
 }

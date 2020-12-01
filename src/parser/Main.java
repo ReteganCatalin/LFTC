@@ -70,10 +70,26 @@ public class Main {
                     String value=scan.next();
                     parseWord(value);
                 }
+                case 9 ->{
+                    System.out.println("Give input:");
+                    String value=scan.next();
+                    createTable(value);
+                }
             }
             if (i == 0) {
                 break;
             }
+        }
+    }
+
+    private static void createTable(String word) {
+        List<List<Pair<String,String>>>  canCol=parser.ColCan_LR();
+        HashMap<Integer, Pair<String, HashMap<String, Integer>>> lrTable=parser.createLRTable(canCol);
+        List<String> wordResult=parser.parsingAlg(lrTable,canCol,word);
+        if(wordResult==null)
+            System.out.println("Error");
+        else{
+            parser.createTable(wordResult);
         }
     }
 
