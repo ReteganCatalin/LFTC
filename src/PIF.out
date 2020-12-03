@@ -1,0 +1,9 @@
+PIF: (Pair{key=start, value=Pair{key=0, value=0}}
+Pair{key=1, value=Pair{key=7, value=0}}
+Pair{key=<-, value=Pair{key=0, value=0}}
+Pair{key=;, value=Pair{key=0, value=0}}
+Pair{key=<-, value=Pair{key=0, value=0}}
+Pair{key=0, value=Pair{key=1, value=0}}
+Pair{key=;, value=Pair{key=0, value=0}}
+Pair{key=stop, value=Pair{key=0, value=0}}
+)

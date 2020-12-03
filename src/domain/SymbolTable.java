@@ -20,6 +20,14 @@ public class SymbolTable {
         public HashNode(K key) {
             this.key = key;
         }
+
+        @Override
+        public String toString() {
+            return "HashNode{" +
+                    "key=" + key +
+                    ", next=" + next +
+                    '}';
+        }
     }
 
     public SymbolTable() {
@@ -63,10 +71,9 @@ public class SymbolTable {
     }
 
 
-    //Gets as a parameter the whole String token(identifier or constant)
-    //As the output parameter we will have a domain.Pair
-    //having the key the index in the table of Nodes and as the value of the domain.
-    //Pair the position in which we found the token in that Node list or the position in which we added the token
+    // Gets as a parameter the whole String token(identifier or constant)
+    // As the output parameter we will have a domain.Pair
+    // having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we found the token in that Node list or the position in which we added the token
     public Pair<Integer, Integer> pos(String token) {
         Pair<Integer, Integer> index = search(token);
         if (index == null) {
@@ -76,10 +83,22 @@ public class SymbolTable {
 
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb=new StringBuilder("Symbol table: (");
+        int i=0;
+        for(HashNode<String> hashStart: hashList){
+            sb.append("StartNode "+i+" :");
+            sb.append(hashStart);
+            sb.append("\n");
+            i++;
+        }
+        return sb.toString();
+    }
+
     // Gets as a parameter the whole String token(identifier or constant)
     // As the output parameter we will have a domain.Pair:
-    // having the key the index in the table of Nodes and as the value of the domain.
-    // Pair the position in which we insert in that Node list
+    // having the key the index in the table of Nodes and as the value of the domain.Pair the position in which we insert in that Node list
     public Pair<Integer, Integer> add(String token) {
         // Find head of chain for given key
         int listIndex = getListIndex(token);

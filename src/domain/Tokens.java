@@ -21,7 +21,7 @@ public class Tokens {
     }
 
     public void read(){
-        String fileName = "Tokens.in";
+        String fileName = "C:\\Users\\Catalin\\Desktop\\Faculty\\LFTC\\src\\domain\\Tokens.in";
         String line;
         int i=1;
         try {
@@ -31,10 +31,10 @@ public class Tokens {
                     new BufferedReader(fileReader);
 
             while((line = bufferedReader.readLine()) != null) {
-                if(i <= 16) {
+                if(i < 16) {
                     operators.add(line.strip());
                 }
-                else if(i > 16 && i <=22){
+                else if(i <=22){
                     if (line.strip().equals("<space>")){
                         separators.add(" ");
                     }

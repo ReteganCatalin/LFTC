@@ -1,6 +1,6 @@
 start
 
-@a is Text, @b is Text, @c is Text;
+@ a is Text, @ b is Text, @ c is Text;
 
 b <- "nota";
 

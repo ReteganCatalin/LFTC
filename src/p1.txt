@@ -1,7 +1,7 @@
 start
 
-@a is Number, @b is Number;
-@c is Number;
+@ a is Number, @ b is Number;
+@ c is Number;
 
 scanning a;
 b <- 34;

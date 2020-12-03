@@ -7,9 +7,14 @@ public class ProgramInternalForm {
 
     @Override
     public String toString() {
-        return "domain.ProgramInternalForm{" +
-                pif +
-                '}';
+        StringBuilder sb=new StringBuilder("PIF: (");
+        int i=0;
+        for(Pair<String,Pair<Integer,Integer>> pifElem: pif){
+            sb.append(pifElem);
+            sb.append("\n");
+        }
+        sb.append(")");
+        return sb.toString();
     }
 
     public ProgramInternalForm() {

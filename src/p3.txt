@@ -1,8 +1,8 @@
 start
 
-@a is Number;
-@b is Number;
-@sum is Number;
+@ a is Number;
+@ b is Number;
+@ sum is Number;
 sum <- 0;
 scanning a;
 
