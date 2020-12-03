@@ -54,8 +54,7 @@ public class Grammar {
             line = bufferedReader.readLine();
             while (line != null) {
                 List<String> tokens = Arrays.stream(line.strip()
-                        .replace("->", " ")
-                        .split(" "))
+                        .split("->"))
                         .collect(Collectors.toList());
                 if (N.contains(tokens.get(0))) {
                     Pair<String,String>  pair= new Pair( tokens.get(0), tokens.get(1));

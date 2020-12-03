@@ -13,7 +13,7 @@ public class Main {
 
     private static void readGrammar() {
         try {
-            parser.readGrammar("C:\\Users\\Catalin\\Desktop\\Faculty\\LFTC\\src\\parser\\g1.txt");
+            parser.readGrammar("C:\\Users\\Catalin\\Desktop\\Faculty\\LFTC\\src\\parser\\g2.txt");
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -29,6 +29,7 @@ public class Main {
         System.out.println("6 Display Canonical Collection");
         System.out.println("7 Display LR table");
         System.out.println("8 Parse word");
+        System.out.println("9 Parse with table father sibling");
 
     }
 
@@ -50,7 +51,7 @@ public class Main {
                 }
                 case 4 ->{
                     System.out.println("Give input:");
-                    String value=scan.next();
+                    String value="S'->. S";
                     System.out.println(parser.ClosureLR(value));
                 }
                 case 5 ->{
@@ -67,12 +68,14 @@ public class Main {
                 }
                 case 8 ->{
                     System.out.println("Give input:");
-                    String value=scan.next();
+                    scan.nextLine();
+                    String value=scan.nextLine();
                     parseWord(value);
                 }
                 case 9 ->{
                     System.out.println("Give input:");
-                    String value=scan.next();
+                    scan.nextLine();
+                    String value=scan.nextLine();
                     createTable(value);
                 }
             }
@@ -89,7 +92,10 @@ public class Main {
         if(wordResult==null)
             System.out.println("Error");
         else{
-            parser.createTable(wordResult);
+            List<Pair<String, Pair<Integer, Integer>>> table=parser.createTable(wordResult);
+            for(int i=0;i<table.size();i++){
+                System.out.println(table.get(i));
+            }
         }
     }
 
@@ -109,7 +115,7 @@ public class Main {
     }
 
     private static void displayGoTo(String value){
-        List<Pair<String,String>> gotoResult=parser.gotoLR(parser.ClosureLR("S'->.S"),value);
+        List<Pair<String,String>> gotoResult=parser.gotoLR(parser.ClosureLR("S'->. S"),value);
         if(gotoResult.isEmpty())
             System.out.println("No results");
         else{

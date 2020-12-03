@@ -1,0 +1,8 @@
+Pair{key=S, value=Pair{key=-1, value=-1}}
+Pair{key=a, value=Pair{key=0, value=-1}}
+Pair{key=A, value=Pair{key=0, value=1}}
+Pair{key=b, value=Pair{key=2, value=-1}}
+Pair{key=A, value=Pair{key=2, value=3}}
+Pair{key=b, value=Pair{key=4, value=-1}}
+Pair{key=A, value=Pair{key=4, value=5}}
+Pair{key=c, value=Pair{key=6, value=-1}}

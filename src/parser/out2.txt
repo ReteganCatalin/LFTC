@@ -1,0 +1,16 @@
+Pair{key=S, value=Pair{key=-1, value=-1}}
+Pair{key=start, value=Pair{key=0, value=-1}}
+Pair{key=CS, value=Pair{key=0, value=1}}
+Pair{key=stop, value=Pair{key=0, value=2}}
+Pair{key={, value=Pair{key=2, value=-1}}
+Pair{key=DS, value=Pair{key=2, value=3}}
+Pair{key=}, value=Pair{key=2, value=4}}
+Pair{key=DC, value=Pair{key=5, value=-1}}
+Pair{key=;, value=Pair{key=5, value=6}}
+Pair{key=@, value=Pair{key=7, value=-1}}
+Pair{key=ID, value=Pair{key=7, value=8}}
+Pair{key=is, value=Pair{key=7, value=9}}
+Pair{key=T, value=Pair{key=7, value=10}}
+Pair{key=T1, value=Pair{key=10, value=-1}}
+Pair{key=Number, value=Pair{key=12, value=-1}}
+Pair{key=1, value=Pair{key=13, value=-1}}

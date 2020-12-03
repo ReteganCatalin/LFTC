@@ -33,26 +33,25 @@ public class Parser {
 
     public List<Pair<String, String>> ClosureLR(String analysis) {
         List<String> tokens = Arrays.stream(analysis.strip()
-                .replace("->", " ")
-                .split(" "))
+                .split("->"))
                 .collect(Collectors.toList());
         List<Pair<String, String>> P = new ArrayList<>();
         P.add(new Pair<>(tokens.get(0), tokens.get(1)));
         int index;
-        char nonT;
+        String nonT;
         int size = 1;
 
         do {
             size = P.size();
             List<Pair<String, String>> filteredP = new ArrayList<>(P);
             for (Pair<String, String> production : filteredP) {
-                index = production.getValue().indexOf('.');
-                if (index != -1 && index < production.getValue().length() - 1) {
-                    nonT = production.getValue().charAt(index + 1);
-                    List<Pair<String, String>> filteredB = grammar.filterP(Character.toString(nonT));
+                index = findDot(production.getValue().split(" "));
+                if (index != -1 && index < production.getValue().split(" ").length - 1) {
+                    nonT = production.getValue().split(" ")[index+1];
+                    List<Pair<String, String>> filteredB = grammar.filterP(nonT);
                     for (Pair<String, String> productionB : filteredB) {
-                        if (!P.contains(new Pair<>(productionB.getKey(), "." + productionB.getValue()))) {
-                            P.add(new Pair<>(productionB.getKey(), "." + productionB.getValue()));
+                        if (!P.contains(new Pair<>(productionB.getKey(), ". " + productionB.getValue()))) {
+                            P.add(new Pair<>(productionB.getKey(), ". " + productionB.getValue()));
                         }
                     }
                 }
@@ -62,12 +61,20 @@ public class Parser {
         return P;
     }
 
+    private int findDot(String[] s) {
+        for(int i=0;i<s.length;i++){
+            if(s[i].equals("."))
+                return i;
+        }
+        return -1;
+    }
+
 
     public List<Pair<String, String>> gotoLR(List<Pair<String, String>> productions, String symbol) {
         List<Pair<String, String>> nestedList = new ArrayList<>();
         productions.stream()
-                .filter(item -> item.getValue().contains("." + symbol))
-                .map(item -> new Pair<>(item.getKey(), item.getValue().replace("." + symbol, symbol + ".")))
+                .filter(item -> item.getValue().contains(". " + symbol))
+                .map(item -> new Pair<>(item.getKey(), item.getValue().replace(". " + symbol, symbol + " .")))
                 .forEach(item -> nestedList.addAll(ClosureLR(item.getKey() + "->" + item.getValue())));
         return nestedList.stream().distinct().collect(Collectors.toList());
 
@@ -78,7 +85,7 @@ public class Parser {
 
         List<List<Pair<String, String>>> C = new ArrayList<>();
 
-        C.add(ClosureLR("S'->.S"));
+        C.add(ClosureLR("S'->. S"));
 
         boolean dirty;
 
@@ -115,7 +122,7 @@ public class Parser {
 
         for (List<Pair<String, String>> state : states) {
             int position=states.indexOf(state);
-            if(state.contains(new Pair("S'","S."))){
+            if(state.contains(new Pair("S'","S ."))){
                 lrTable.put(position,new Pair("acc",new HashMap<String,Integer>()));
             }
             else if(hasReduce(state)!=-1){
@@ -135,52 +142,46 @@ public class Parser {
                 }
             }
         }
-
-
         return lrTable;
-
-
     }
 
 
 
     private Integer hasReduce(List<Pair<String, String>> state) {
         for(Pair<String,String> lrItem: state){
-            if(lrItem.getValue().charAt(lrItem.getValue().length()-1)=='.'){
-                return grammar.getP().indexOf(new Pair(lrItem.getKey(),lrItem.getValue().substring(0,lrItem.getValue().length()-1)));
+            if(lrItem.getValue().split(" ")[lrItem.getValue().split(" ").length-1].equals(".")){
+                return grammar.getP().indexOf(new Pair(lrItem.getKey(),lrItem.getValue().substring(0,lrItem.getValue().length()-2)));
             }
         }
         return -1;
     }
 
     public List<String> parsingAlg(HashMap<Integer, Pair<String, HashMap<String, Integer>>>  lrTable,List<List<Pair<String, String>>> C,  String word) {
-
-        //TODO work with stack
         List<Pair<String, String>> state = C.get(0);
         List<String> alpha = new ArrayList<>();
-        ;
-        List<Character> beta = new ArrayList<>();
+        List<String> beta = new ArrayList<>();
         List<String> phi = new ArrayList<>();
         alpha.add("0");
-        for (int i = 0; i <= word.length()-1; i++) {
-            beta.add(word.charAt(i));
+        String[] parse=word.split(" ");
+        for (int i = 0; i <= parse.length-1; i++) {
+            beta.add(parse[i]);
         }
         while(true){
             int position=Integer.parseInt(alpha.get(alpha.size()-1));
             if (lrTable.get(position).getKey().equals("shift")) {
-                Character a = beta.remove(0);
-                state = gotoLR(state, a.toString());
-                alpha.add(a.toString());
+                String a = beta.remove(0);
+                state = gotoLR(state, a);
+                alpha.add(a);
                 alpha.add(Integer.toString(C.indexOf(state)));
             } else if (lrTable.get(position).getKey().contains("reduce")) {
                 String findReducer=lrTable.get(position).getKey().substring(7);
                 int reducer=Integer.parseInt(findReducer);
                 Pair<String,String> production=search_prod(reducer);
-                for(int i=0;i<2*production.getValue().length();i++) {
+                for(int i=0;i<2*production.getValue().split(" ").length;i++) {
                     alpha.remove(alpha.size()-1); //?
                 }
                 state = gotoLR(C.get(Integer.parseInt(alpha.get(alpha.size()-1))), production.getKey());
-                alpha.add(Character.toString(production.getKey().charAt(0)));
+                alpha.add(production.getKey());
                 alpha.add(Integer.toString(C.indexOf(state)));
                 phi.add(findReducer);
             }
@@ -201,7 +202,7 @@ public class Parser {
         return grammar.getP().get(reducer);
     }
 
-    public void createTable(List<String> productions){
+    public List<Pair<String, Pair<Integer, Integer>>> createTable(List<String> productions){
         List<Pair<String,Pair<Integer,Integer>>> table=new ArrayList<>();
         table.add(new Pair<>("S",new Pair<>(-1,-1)));
         int k=0;
@@ -211,13 +212,13 @@ public class Parser {
             }
             Pair<String, String> prod=search_prod(Integer.parseInt(production));
             int index=0;
-            table.add(new Pair(String.valueOf(prod.getValue().charAt(0)),new Pair(k,-1)));
+            table.add(new Pair(prod.getValue().split(" ")[index],new Pair(k,-1)));
             index++;
-            for(;index<prod.getValue().length();index++){
-                table.add(new Pair(String.valueOf(prod.getValue().charAt(index)),new Pair(k,k+index)));
+            for(;index<prod.getValue().split(" ").length;index++){
+                table.add(new Pair(prod.getValue().split(" ")[index],new Pair(k,k+index)));
             }
             k++;
         }
-        System.out.println(table);
+        return table;
     }
 }

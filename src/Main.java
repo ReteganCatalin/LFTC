@@ -13,7 +13,7 @@ public class Main {
         ProgramInternalForm programInternalForm=new ProgramInternalForm();
         Scanner Scanner=new Scanner();
         StringBuilder errorMessage=new StringBuilder();
-        String fileName = "C:\\Users\\Catalin\\Desktop\\Faculty\\LFTC\\src\\p1err.txt";
+        String fileName = "C:\\Users\\Catalin\\Desktop\\Faculty\\LFTC\\src\\p1.txt";
         String line;
         int count=0;
         try {

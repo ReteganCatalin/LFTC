@@ -1,0 +1,11 @@
+N = S DS DC T AD T1 CS SL ST SS AS E T F I STR IF WS C COND BOOL REL ID CON
+E = { } [ ] start stop , is @ Text Boolean Number Character Vector is ; <- add sub mul div mod scanning printing ( ) else & | < > == <= >= != 0 1
+P =
+S->start CS stop
+DS->DC ;
+DC->@ ID is T
+T1->Number
+T->T1
+CS->{ DS }
+ID->1
+CON->0

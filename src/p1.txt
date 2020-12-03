@@ -1,18 +1,5 @@
 start
-
-@ a is Number, @ b is Number;
-@ c is Number;
-
-scanning a;
-b <- 34;
-
-check if ( a mod 2 == 0) then{
-	c <- a add b;	
+{
+@ b is Number;
 }
-else then{
-	c <- a sub b;
-}
-
-printing c;
-
 stop
