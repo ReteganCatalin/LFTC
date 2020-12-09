@@ -1,11 +1,23 @@
-N = S DS DC T AD T1 CS SL ST SS AS E T F I STR IF WS C COND BOOL REL ID CON
-E = { } [ ] start stop , is @ Text Boolean Number Character Vector is ; <- add sub mul div mod scanning printing ( ) else & | < > == <= >= != 0 1
+N = S DS DC TY AD T1 CS AS EXP TM IF COND ID CONS THF
+E = { } [ ] start stop , @ Text Boolean Number Character Vector is check while then ; <- add sub mul div mod scanning printing ( ) else & | == <= >= != 0 1
 P =
 S->start CS stop
 DS->DC ;
-DC->@ ID is T
+DC->@ ID is TY
 T1->Number
-T->T1
-CS->{ DS }
+TY->T1
+CS->{ DS IF }
+CS->{ AS }
+IF->check ( COND ) then THF
+AS->ID <- EXP ;
+THF->CS else CS
+COND->EXP == EXP
+EXP->TM
+EXP->EXP add TM
+EXP->EXP sub TM
+EXP->EXP mul TM
+TM->( EXP )
+TM->ID
+TM->CONS
 ID->1
-CON->0
+CONS->0

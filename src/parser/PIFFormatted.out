@@ -1,1 +1,1 @@
-start { @ 1 is Number ; } stop
+start { @ 1 is Number ; check ( 0 add 0 == 1 ) then { 1 <- 1 add 1 ; } else { 1 <- 1 mul 0 ; } } stop
