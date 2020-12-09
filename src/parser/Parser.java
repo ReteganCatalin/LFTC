@@ -205,19 +205,33 @@ public class Parser {
     public List<Pair<String, Pair<Integer, Integer>>> createTable(List<String> productions){
         List<Pair<String,Pair<Integer,Integer>>> table=new ArrayList<>();
         table.add(new Pair<>("S",new Pair<>(-1,-1)));
+        List<Integer> kStack=new ArrayList<>();
         int k=0;
+        Integer realIndex=0;
+        kStack.add(k);
         for(String production:productions){
+            k=kStack.remove(kStack.size()-1);
             while(!grammar.getN().contains(table.get(k).getKey())){
                 k++;
+                realIndex++;
             }
             Pair<String, String> prod=search_prod(Integer.parseInt(production));
             int index=0;
+            if(grammar.getN().contains(prod.getValue().split(" ")[index])){
+                kStack.add(realIndex+1);
+            }
+            realIndex++;
             table.add(new Pair(prod.getValue().split(" ")[index],new Pair(k,-1)));
             index++;
             for(;index<prod.getValue().split(" ").length;index++){
-                table.add(new Pair(prod.getValue().split(" ")[index],new Pair(k,k+index)));
+
+                if(grammar.getN().contains(prod.getValue().split(" ")[index])){
+                    kStack.add(realIndex+1);
+                }
+                realIndex++;
+                table.add(new Pair(prod.getValue().split(" ")[index],new Pair(k,realIndex)));
             }
-            k++;
+
         }
         return table;
     }
