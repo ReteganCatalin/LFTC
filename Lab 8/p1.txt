@@ -1,0 +1,12 @@
+start
+{
+@ b is Number;
+check if ( 2 add 2 == b) then {
+	b <- b add a;
+}
+else
+{
+    b <- b mul 2;
+}
+}
+stop

@@ -1,0 +1,75 @@
+DIGIT [0-9]
+STRING \"([a-zA-Z0-9])*\"
+NUMBER [+-]?[1-9][0-9]*
+CHARACTER \'[0-9a-zA-Z]\'
+BOOLEAN true|false
+CONSTANT {STRING}|{NUMBER}|{CHARACTER}
+ID [a-zA-Z][a-zA-Z0-9]{0,255}
+SPACE ' '
+NEWLINE \n
+
+%%
+
+add {printf("An operator: %s\n", yytext );}
+sub {printf("An operator: %s\n", yytext );}
+mul {printf("An operator: %s\n", yytext );}
+div {printf("An operator: %s\n", yytext );}
+mod {printf("An operator: %s\n", yytext );}
+\<- {printf("An operator: %s\n", yytext );}
+\< {printf("An operator: %s\n", yytext );}
+\<= {printf("An operator: %s\n", yytext );}
+\>= {printf("An operator: %s\n", yytext );}
+== {printf("An operator: %s\n", yytext );}
+\> {printf("An operator: %s\n", yytext );}
+!= {printf("An operator: %s\n", yytext );}
+\& {printf("An operator: %s\n", yytext );}
+\| {printf("An operator: %s\n", yytext );}
+concat {printf( "An operator: %s\n", yytext );}
+
+
+\{ {printf("A separator: %s\n", yytext);}
+\} {printf("A separator: %s\n", yytext);}
+\( {printf("A separator: %s\n", yytext );}
+\) {printf("A separator: %s\n", yytext );}
+; {printf("A separator: %s\n", yytext );}
+, {printf("A separator: %s\n", yytext );}
+SPACE {printf("A space \n" );}
+NEWLINE {printf("A newline \n" );}
+
+scanning {printf("A reserved word: %s\n", yytext );}
+printing {printf("A reserved word: %s\n", yytext );}
+Number {printf("A reserved word: %s\n", yytext );}
+Character {printf("A reserved word: %s\n", yytext );}
+Text {printf("A reserved word: %s\n", yytext );}
+Boolean {printf("A reserved word: %s\n", yytext );}
+is {printf("A reserved word: %s\n", yytext );}
+check {printf("A reserved word: %s\n", yytext );}
+if {printf("A reserved word: %s\n", yytext );}
+start {printf("A reserved word: %s\n", yytext );}
+stop {printf("A reserved word: %s\n", yytext );}
+@ {printf("A reserved word: %s\n", yytext );}
+then {printf("A reserved word: %s\n", yytext );}
+else {printf("A reserved word: %s\n", yytext );}
+while {printf("A reserved word: %s\n", yytext );}
+
+{ID} {printf("An identifier: %s\n", yytext );}
+
+{CONSTANT} {printf( "A constant: %s\n", yytext );}
+
+%%
+
+main( argc, argv )
+int argc;
+char **argv;
+    {
+        ++argv, --argc;	/* skip over program name */
+        if ( argc > 0 )
+            yyin = fopen( argv[0], "r" );
+        else
+            yyin = stdin;
+    yylex();
+    }
+
+#ifndef yywrap
+   yywrap() { return 1; }
+#endif
